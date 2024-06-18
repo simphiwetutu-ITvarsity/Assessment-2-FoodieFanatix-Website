@@ -1,0 +1,225 @@
+<!doctype html by Nigel Kudzurunga>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=devive-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Foodie Fanatix</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+</head>
+
+<body onload="init()">
+    <div class="d-flex flex-column align-items-center p-3 bg-white border-bottom box-shadow fixed-top">
+        <h1> Foodie Fanatix </h1>
+        <h2>By Claire </h2>
+
+        <nav>
+            <a id="getBest" class="p-2 text-dark" href="#">Best</a>
+            <a id="getAll" class="p-2 text-dark active" href="#">All</a>
+            <a id="getPopular" class="p-2 text-dark" href="#">Popular</a>
+        </nav>
+    </div>
+
+    <div class="blog-header mx-auto text-center">
+        <h1>Is it Tasty?</h1>
+        <p class="lead">All the Best <strong><em>Chicken</em></strong>, <strong><em>Instant Pot</em></strong>
+            and <strong><em>Breakfast/Brunch</em></strong> Food from around the world.</p>
+    </div>
+
+    <div class="container team">
+        <img src="https://iamafoodblog.b-cdn.net/wp-content/uploads/2021/04/honey-garlic-chicken-3370w-600x400.webp" class="img-thumbnail rounded-circle" width="90" />
+        <img src="https://iamafoodblog.b-cdn.net/wp-content/uploads/2021/01/osso-buco-1840w-1024x683.jpg" class="img-thumbnail rounded-circle" width="90" />
+        <img src="https://iamafoodblog.b-cdn.net/wp-content/uploads/2020/12/french-toast-9582w-600x400.jpg" class="img-thumbnail rounded-circle" width="90" />
+        <img src="https://iamafoodblog.b-cdn.net/wp-content/uploads/2020/06/meal-prep-breakfast-3736w-600x400.jpg" class="img-thumbnail rounded-circle" width="90" />
+        <img src="https://iamafoodblog.b-cdn.net/wp-content/uploads/2021/07/ricotta-toast-4653w-600x400.webp" class="img-thumbnail rounded-circle" width="90" />
+        <img src="https://iamafoodblog.b-cdn.net/wp-content/uploads/2019/02/full-english-7355w-2-600x400.webp" class="img-thumbnail rounded-circle" width="90" />
+        <img src="https://iamafoodblog.b-cdn.net/wp-content/uploads/2020/06/creamy-cacio-e-pepe-recipe-2147w-1536x1025.webp" class="img-thumbnail rounded-circle" width="90" />
+        <img src="https://iamafoodblog.b-cdn.net/wp-content/uploads/2019/09/one-pot-hainanese-chicken-7107w-600x400.jpg" class="img-thumbnail rounded-circle" width="90" />
+        <img src="https://iamafoodblog.b-cdn.net/wp-content/uploads/2019/07/peanut-free-pad-thai-6283w-600x400.jpg" class="img-thumbnail rounded-circle" width="90" />
+    </div>
+
+    <div class="row container mx-auto">
+        <div class="column" id="posts">
+            Loading content...
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        var rootPath;
+
+        function init() {
+            rootPath = "https://mysite.itvarsity.org/api/mini-blog/";
+            
+
+            document.getElementById("getAll").addEventListener('click', getAllPosts);
+            document.getElementById("getBest").addEventListener('click', getLatestPosts);
+            document.getElementById("getPopular").addEventListener('click', getPopularPosts);
+
+            getAllPosts();
+        }
+
+        function getAllPosts() {
+            category = "getAll"
+            fetchPosts(category);
+            setActiveLink(category);
+        }
+
+        function getLatestPosts() {
+            category = "getBest"
+            fetchPosts(category);
+            setActiveLink(category);
+        }
+
+        function getPopularPosts() {
+            category = "getPopular"
+            fetchPosts(category);
+            setActiveLink(category);
+        }
+
+        function fetchPosts(category) {
+            fetch(rootPath + 'get-posts/?category=' + category)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    displayPosts(data);
+                })
+        }
+
+        function displayPosts(data) {
+            var output = "";
+
+            for (a = 0; a < data.length; ++a) {
+                output =  `
+                    <div class="card mb-4 shadow-box">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">Chicken</h4>
+                        </div>
+                        <div class="card-body">
+                            <img src="images/teriyaki-chicken-8201w-1536x1025.webp" class="card-img-top" />
+                            <p class="card-text"><strong><em>A warm teriyaki chicken bowl is the ultimate in comfort food.</em></strong>
+                                <br>
+                            Teriyaki chicken is one of my faves. 
+                            This is a a teriyaki chicken bowl to take you to Tokyo. 
+                            There’s something about that sweet and savory sauce on chicken that gets me every time. 
+                            A really good bowl of teriyaki chicken reminds me of eating skewer after skewer of yakitori in the narrow back alleys of Tokyo.
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg btn-link"><i class="far fa-heart"></i></button>
+                                    <button type="button" class="btn btn-lg btn-link"><i class="far fa-comment"></i></button>
+                                    <button type="button" class="btn btn-lg btn-link"><i class="fa fa-retweet"></i></button>
+                                </div>
+                                <small class="text-muted">24/10/2024</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4 shadow-box">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">Scalloped Potatoes</h4>
+                        </div>
+                        <div class="card-body">
+                            <img src="images/scalloped-potatoes-9628w_1-1536x1025.webp" class="card-img-top" />
+                            <p class="card-text"><strong><em>Scalloped potatoes are rich, creamy, carb-forward, and the perfect accompaniment to any large format meat.</em></strong>
+                                <br>
+                                They’re a classic side dish for a reason, in fact, they’re rich and delicious enough to stand on their own, I say. 
+                                I would be happy eating only scalloped potatoes for dinner: well seasoned, tender potatoes in a rich and vevelty cream sauce with a little bit of golden brown cheese. 
+                                Pure potato heaven.
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg btn-link"><i class="far fa-heart"></i></button>
+                                    <button type="button" class="btn btn-lg btn-link"><i class="far fa-comment"></i></button>
+                                    <button type="button" class="btn btn-lg btn-link"><i class="fa fa-retweet"></i></button>
+                                </div>
+                                <small class="text-muted">24/10/2024</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4 shadow-box">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">Japanese Pancakes</h4>
+                        </div>
+                        <div class="card-body">
+                            <img src="images/japanese-fluffy-pancakes-recipe-7077w-2-1024x683.jpg"class="card-img-top" />
+                            <p class="card-text"><strong><em> I MADE FLUFFY JAPANESE PANCAKES!! I MADE FLUFFY PANCAKES!!</em></strong>
+                                <br>
+
+Sorry for shouting, but I’m so excited!! Ever since the first time I laid eyes on those giggly giant fluffy Japanese pancakes, I’ve been obsessed. 
+We may or may not have been to almost every fluffy pancake place in Tokyo because of my obsession – here’s a run down on the places we’ve been to. 
+I love the way Japanese pancakes taste: light, airy, and oh so delicious.
+
+
+The best part of going to the pancake places, aside from eating the pancakes, is that you get to watch them expertly shape, flip, and plate up serving after serving of fluffy goodness. 
+It’s nice to watch but also kind of awkward because I’m sure the pancake peeps don’t really want anyone staring at them. 
+I would have major anxiety if people were watching me do my job day after day after day.
+
+Heck, I was anxious making these pancakes in the safety of my own home in my joggers and sweatshirt. 
+It’s a good thing I was in comfy clothes because these pancakes have been years in the making and to be honest, I failed a couple times before they came out just the way I wanted them.
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg btn-link"><i class="far fa-heart"></i></button>
+                                    <button type="button" class="btn btn-lg btn-link"><i class="far fa-comment"></i></button>
+                                    <button type="button" class="btn btn-lg btn-link"><i class="fa fa-retweet"></i></button>
+                                </div>
+                                <small class="text-muted">24/10/2024</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4 shadow-box">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">Crockpot Beef Stew</h4>
+                        </div>
+                        <div class="card-body">
+                            <img src="images/crockpot-beef-stew-0075w-1536x1025.webp" class="card-img-top" />
+                            <p class="card-text"><strong><em>It’s stew season: the best time to cozy up to a bowl of super hearty, super warming crockpot beef stew!</em></strong>
+                                <br>
+                                Beef stew has to be one of the coziest, most comforting things to make and eat. 
+                                Who doesn’t love tender, juicy little nubbins of beef and perfectly cooked potatoes, carrots, and onions all snuggled up in a rich and flavorful gravy? 
+                                Pair a bowl with a loaf of crusty hot bread and you have my idea of heaven.
+                                At its heart, beef stew ingredients are very simple: aromatics, beef, vegetables, stock. 
+                                Everyone knows and loves beef stew, but this beef stew is particularly good. 
+                                It’s a take on my all time favorite stew ever, Vietnamese bo kho, a super flavorful rich and hearty stew.
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg btn-link"><i class="far fa-heart"></i></button>
+                                    <button type="button" class="btn btn-lg btn-link"><i class="far fa-comment"></i></button>
+                                    <button type="button" class="btn btn-lg btn-link"><i class="fa fa-retweet"></i></button>
+                                </div>
+                                <small class="text-muted">24/10/2024</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            document.getElementById("posts").innerHTML = output;
+        }
+
+        function setActiveLink(id){
+            document.getElementById("getAll").classList.remove("active");
+            document.getElementById("getBest").classList.remove("active");
+            document.getElementById("getPopular").classList.remove("active");
+
+            document.getElementById(id).classList.add("active");
+        }
+    </script>
+      <hr class="section-divider"/>
+
+      <footer class="container footer-section">
+          <p class="float-right"><a href="#">Back to Top</a></p>
+          <p>&copy; Nigel Kudzurunga &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer>
+</body>
+
+</html>
